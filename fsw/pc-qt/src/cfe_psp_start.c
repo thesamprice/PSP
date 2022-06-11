@@ -186,7 +186,7 @@ int32 CFE_PSP_OS_EventHandler(OS_Event_t event, osal_id_t object_id, void *data)
             {
                 taskname[CFE_PSP_KERNEL_NAME_LENGTH_MAX-1] = 0;
             }
-            pthread_setname_np(pthread_self(), taskname);
+            // pthread_setname_np(pthread_self(), taskname);
         }
         break;
     }

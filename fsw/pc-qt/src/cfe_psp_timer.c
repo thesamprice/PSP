@@ -164,8 +164,8 @@ void CFE_PSP_Get_Timebase(uint32 *Tbu, uint32* Tbl)
    OS_time_t        time;
 
    OS_GetLocalTime(&time);
-   *Tbu = time.seconds;
-   *Tbl = time.microsecs;
+   *Tbu = time.ticks >> 32;
+   *Tbl = time.ticks & 0xFFFFffff;
 }
 
 /******************************************************************************

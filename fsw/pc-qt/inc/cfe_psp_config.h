@@ -68,6 +68,8 @@
 /* use the "USR1" signal to wake the idle thread when an exception occurs */
 #define CFE_PSP_EXCEPTION_EVENT_SIGNAL      SIGUSR1
 
+#define CFE_PSP_SOFT_TIMEBASE_PERIOD 10000
+
 
 /*
 ** Global variables

@@ -60,4 +60,6 @@
     " PSP DEVELOPMENT BUILD " CFE_PSP_IMPL_VERSION                                                       \
     ", Last Official Release: psp v1.4.0"                        /* For full support please use this version */
 
+#define CFE_PSP_IMPL_CODENAME "PSP-QT"
+
 #endif  /* _psp_version_ */

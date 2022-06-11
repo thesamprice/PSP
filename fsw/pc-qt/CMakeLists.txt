@@ -25,4 +25,10 @@ add_library(psp-${CFE_PSP_TARGETNAME}-impl OBJECT
 # Code outside the pc-linux PSP should _not_ depend on this.
 target_compile_definitions(psp-${CFE_SYSTEM_PSPNAME}-impl PRIVATE
     _GNU_SOURCE
+    $<TARGET_PROPERTY:psp_module_api,INTERFACE_COMPILE_DEFINITIONS>
+)
+
+target_include_directories(psp-${CFE_PSP_TARGETNAME}-impl PRIVATE
+    inc
+    $<TARGET_PROPERTY:psp_module_api,INTERFACE_INCLUDE_DIRECTORIES>
 )
