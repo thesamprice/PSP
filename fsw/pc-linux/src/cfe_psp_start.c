@@ -1,22 +1,20 @@
-/*
-**  GSC-18128-1, "Core Flight Executive Version 6.7"
-**
-**  Copyright (c) 2006-2019 United States Government as represented by
-**  the Administrator of the National Aeronautics and Space Administration.
-**  All Rights Reserved.
-**
-**  Licensed under the Apache License, Version 2.0 (the "License");
-**  you may not use this file except in compliance with the License.
-**  You may obtain a copy of the License at
-**
-**    http://www.apache.org/licenses/LICENSE-2.0
-**
-**  Unless required by applicable law or agreed to in writing, software
-**  distributed under the License is distributed on an "AS IS" BASIS,
-**  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-**  See the License for the specific language governing permissions and
-**  limitations under the License.
-*/
+/************************************************************************
+ * NASA Docket No. GSC-18,719-1, and identified as “core Flight System: Bootes”
+ *
+ * Copyright (c) 2020 United States Government as represented by the
+ * Administrator of the National Aeronautics and Space Administration.
+ * All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ************************************************************************/
 
 /******************************************************************************
 ** File:  cfe_psp_start.c
@@ -153,7 +151,10 @@ static const struct option longOpts[] = {{"reset", required_argument, NULL, 'R'}
 */
 int32 CFE_PSP_OS_EventHandler(OS_Event_t event, osal_id_t object_id, void *data)
 {
-    char taskname[OS_MAX_API_NAME];
+    char      taskname[OS_MAX_API_NAME];
+    cpu_set_t cpuset;
+
+    memset(taskname, 0, sizeof(taskname));
 
     switch (event)
     {
@@ -172,6 +173,21 @@ int32 CFE_PSP_OS_EventHandler(OS_Event_t event, osal_id_t object_id, void *data)
             /* Get the name from OSAL and propagate to the pthread/system layer */
             if (OS_GetResourceName(object_id, taskname, sizeof(taskname)) == OS_SUCCESS)
             {
+                /*
+                 * Example mechanism for setting thread affinity
+                 *
+                 * Could assign based on task name, pattern within name (CFE_* on 0,
+                 * *_CN where N is desired core), round robin or whatever the requrements are.
+                 *
+                 * Just assigning all "CFE_*" tasks to core zero and let the rest float.
+                 */
+                if (strncmp(taskname, "CFE_", 4) == 0)
+                {
+                    CPU_ZERO(&cpuset);
+                    CPU_SET(0, &cpuset);
+                    pthread_setaffinity_np(pthread_self(), sizeof(cpuset), &cpuset);
+                }
+
                 /*
                  * glibc/kernel has an internal limit for this name.
                  * If the OSAL name is longer, just truncate it.

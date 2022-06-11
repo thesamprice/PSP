@@ -9,6 +9,38 @@ This is a collection of APIs abstracting platform specific functionality to be l
 
 ## Version History
 
+### Development Build: v1.6.0-rc4+dev38
+
+- Resolve uninit var static analysis warning
+- See <https://github.com/nasa/PSP/pull/346> and <https://github.com/nasa/cFS/pull/492>
+
+### Development Build: v1.6.0-rc4+dev34
+
+- Update codeql workflow for reusable updates
+- Add cpu affinity example
+- Update RTEMS CMake Platform File
+- See <https://github.com/nasa/PSP/pull/343> and <https://github.com/nasa/cFS/pull/471>
+
+### Development Build: v1.6.0-rc4+dev21
+
+- Standardize version.h
+- Update Copyright Header
+- See <https://github.com/nasa/PSP/pull/330> and <https://github.com/nasa/cFS/445>
+
+
+### Development Build: v1.6.0-rc4+dev14
+
+- Remove explicit filename doxygen comments
+- Apply header guard standard
+- See <https://github.com/nasa/PSP/pull/326> and <https://github.com/nasa/cFS/pull/432>
+
+
+### Development Build: v1.6.0-rc4+dev6
+
+- Sleep before exit when printing
+- Check the address in PSP get segment stubs
+- Set Build Baseline for cFS-Caelum-rc4: v1.6.0-rc4
+- See <https://github.com/nasa/PSP/pull/318> and <https://github.com/nasa/cFS/pull/390>
 
 ### Development Build: v1.5.0-rc1+dev124
 
