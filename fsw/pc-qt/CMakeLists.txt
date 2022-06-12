@@ -32,3 +32,4 @@ target_include_directories(psp-${CFE_PSP_TARGETNAME}-impl PRIVATE
     inc
     $<TARGET_PROPERTY:psp_module_api,INTERFACE_INCLUDE_DIRECTORIES>
 )
+

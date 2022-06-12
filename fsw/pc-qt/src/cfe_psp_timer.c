@@ -66,23 +66,6 @@
                                                            if the lower 32 bits rolls at its maximum value (2^32) then
                                                            OS_BSP_TIMER_LOW32_ROLLOVER will be 0. */
 
-/******************************************************************************
-**  Function:  CFE_PSP_GetTime()
-**
-**  Purpose: Gets the value of the time from the hardware
-**
-**  Arguments: LocalTime - where the time is returned through
-******************************************************************************/
-
-void CFE_PSP_GetTime( OS_time_t *LocalTime)
-{
-
-    /* since we don't have a hardware register to access like the mcp750,
-     * we use a call to the OS to get the time */
-
-    OS_GetLocalTime(LocalTime);
-
-}/* end CFE_PSP_GetLocalTime */
 
 
 
@@ -125,48 +108,6 @@ uint32 CFE_PSP_GetTimerTicksPerSecond(void)
     return(CFE_PSP_TIMER_TICKS_PER_SECOND);
 }
 
-/******************************************************************************
-**  Function:  CFE_PSP_GetTimerLow32Rollover()
-**
-**  Purpose:
-**    Provides the number that the least significant 32 bits of the 64 bit
-**    time stamp returned by CFE_PSP_Get_Timebase rolls over.  If the lower 32
-**    bits rolls at 1 second, then the CFE_PSP_TIMER_LOW32_ROLLOVER will be 1000000.
-**    if the lower 32 bits rolls at its maximum value (2^32) then
-**    CFE_PSP_TIMER_LOW32_ROLLOVER will be 0.
-**
-**  Arguments:
-**
-**  Return:
-**    The number that the least significant 32 bits of the 64 bit time stamp
-**    returned by CFE_PSP_Get_Timebase rolls over.
-*/
-uint32 CFE_PSP_GetTimerLow32Rollover(void)
-{
-    return(CFE_PSP_TIMER_LOW32_ROLLOVER);
-}
-
-/******************************************************************************
-**  Function:  CFE_PSP_Get_Timebase()
-**
-**  Purpose:
-**    Provides a common interface to system timebase. This routine
-**    is in the BSP because it is sometimes implemented in hardware and
-**    sometimes taken care of by the RTOS.
-**
-**  Arguments:
-**
-**  Return:
-**  Timebase register value
-*/
-void CFE_PSP_Get_Timebase(uint32 *Tbu, uint32* Tbl)
-{
-   OS_time_t        time;
-
-   OS_GetLocalTime(&time);
-   *Tbu = time.ticks >> 32;
-   *Tbl = time.ticks & 0xFFFFffff;
-}
 
 /******************************************************************************
 **  Function:  CFE_PSP_Get_Dec()
